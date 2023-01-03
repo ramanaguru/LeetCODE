@@ -1,0 +1,41 @@
+class Solution {
+    public int[][] generateMatrix(int n) {
+
+        int spiral[][] = new int [n][n];
+
+        int x = 0;
+        int y = 0;
+        int ele = 1;
+
+        while(n > 1){
+            for(int k =1; k <= n-1; k++){
+                spiral[x][y]= ele++;
+                y++;
+            }
+            for(int k =1; k <= n-1; k++){
+                spiral[x][y]= ele++;
+                x++;
+            }
+            for(int k =1; k <= n-1; k++){
+                spiral[x][y]= ele++;
+                y--;
+            }
+             for(int k =1; k <= n-1; k++){
+                spiral[x][y]= ele++;
+                x--;
+            }
+            x++;
+            y++;
+
+            n = n-2;
+        }
+
+         if(n ==1){
+            spiral[x][y] = ele;
+            
+        }
+
+        return spiral;
+        
+    }
+}
