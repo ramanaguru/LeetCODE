@@ -1,0 +1,32 @@
+class Solution {
+    public int maximumSum(int[] nums) {
+        HashMap<Integer,Integer> hm =new HashMap<>();
+        int maxi = -1;
+
+        for(int i = 0; i < nums.length; i++){
+            int sum = getsum(nums[i]);
+            if(hm.containsKey(sum)){
+                maxi = Math.max(maxi, nums[i] + hm.get(sum));
+                if(hm.get(sum) < nums[i]){
+                    hm.put(sum, nums[i]);
+                }
+            }
+            else{
+                hm.put(sum,nums[i]);
+            }
+
+
+        }
+        return maxi;
+
+    }
+    
+    public int getsum(int n){
+        int sum = 0;
+        while(n > 0){
+            sum += n % 10;
+            n = n/10;
+        }
+        return sum;
+    }
+}
