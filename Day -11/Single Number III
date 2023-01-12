@@ -1,0 +1,48 @@
+class Solution {
+
+ public boolean bitcheck(int A, int B){
+            if((A &(1<<B)) == 0)
+                return false;
+            
+            return true;
+        }
+    
+    public int[] singleNumber(int[] nums) {
+        int n = nums.length;
+        int val = 0;
+
+        if(nums.length <= 2){
+            return nums;
+        }
+
+        for(int i = 0; i < n; i++){
+            val = val ^ nums[i];
+        }
+
+        int pos = 0;
+
+        for(int i = 31; i >=0; i--){
+            if(bitcheck(val,i) == true){
+                pos = i;
+                break;
+            }
+        }
+        int set = 0;
+        int unset = 0;
+
+        for(int i = 0; i<n; i++){
+            if(bitcheck(nums[i], pos) == true){
+                set = set^nums[i];
+               
+            }else{
+                unset = unset^nums[i];
+                
+            }
+        }
+
+        return new int[]{set,unset};  // output can be ascending / descending order becauseas per the question
+
+
+        
+    }
+}
