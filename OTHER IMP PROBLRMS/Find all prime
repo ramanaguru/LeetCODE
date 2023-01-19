@@ -1,0 +1,45 @@
+Given an integer A. Find the list of all prime numbers in the range [1, A].
+
+A =  7
+ans ---> {2,3,5,7}
+
+
+
+public class Solution {
+    public int[] solve(int A) {
+        boolean arr[] = new boolean[A+1];
+        Arrays.fill(arr,Boolean.TRUE);
+        arr[0] =false;
+        arr[1] = false;
+
+        for(int i = 2 ; i * i <= A; i++){ // start from 2 ,cause prime starts from 2
+            if(arr[i] == true){
+                for(int j = i*i; j <= A; j+=i){ // multiples of i, make false
+                    arr[j] = false;
+                }
+            }
+        }
+
+        int trueCount = 0;
+        
+        for(int i = 2 ; i <= A; i++){ // counting the NO of trueCount in arr[]
+            if(arr[i] == true){
+                trueCount++;
+            }
+        }
+
+        int ans[] = new int [trueCount]; // no of truecount will be the size
+        int idx = 0;
+
+        for(int i = 2; i <= A; i++){ // traverse all from 2 -> A , if true, make that i  add to the ans[]
+            if(arr[i] == true){
+                ans[idx] = i;
+                idx++;
+            }
+        }
+
+        return ans;
+        
+
+    }
+}
