@@ -1,0 +1,50 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int sum = 0;
+        int ans = 0;
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        hm.put(0,1);
+
+        for(int i = 0; i < nums.length ; i++){
+            sum +=nums[i];
+            if(hm.containsKey(sum -k)){
+                ans += hm.get(sum-k);
+            }
+             hm.put(sum , hm.getOrDefault(sum,0) + 1);
+            
+        }
+
+        return ans;
+
+//---------------------------------------------------------------------------
+
+        // BRUTE FORCE APPOACH 
+
+
+        // int n = nums.length;
+        
+        // int pf[] = new int [n + 1];
+        // pf[0] = 0;
+
+        // for(int i = 1; i <= n ; i++){
+        //     pf[i] = pf[i-1] + nums[i-1];
+        // }
+
+        // int count = 0;
+        
+        // for(int start = 0; start < pf.length; start++){
+        //     for(int end = start + 1; end < pf.length; end++){
+        //         if(pf[end]-pf[start] == k){
+        //             count ++;
+        //         }
+        //     }
+        // }
+
+        // return count;
+    }
+}
+
+
+
+
+      
