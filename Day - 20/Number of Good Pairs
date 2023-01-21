@@ -1,0 +1,32 @@
+class Solution {
+    public int numIdenticalPairs(int[] nums) {
+
+        // BRUTE FORCE APPROACH 
+        
+        // int i=0,j=0,c=0;
+        
+        // for(i=0;i<nums.length;i++)
+        // {
+        //     for(j=i+1;j<nums.length;j++)
+        //     {
+        //         if(nums[i]==nums[j])
+        //             c++;;
+        //     }
+        // }
+        // return c;
+
+
+
+    HashMap<Integer,Integer> hm = new HashMap<>();
+    int count = 0;
+    for(int i=0;i<nums.length;i++){
+        if(hm.containsKey(nums[i])){
+            count += hm.get(nums[i]);
+            hm.put(nums[i],hm.get(nums[i])+1);
+        }
+        else
+            hm.put(nums[i],1);
+    }
+    return count;
+    }
+}
