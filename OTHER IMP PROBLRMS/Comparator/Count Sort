@@ -1,0 +1,39 @@
+public class Solution {
+    public ArrayList<Integer> solve(ArrayList<Integer> A) {
+        Collections.sort(A, new Comparator <Integer> (){
+            public int compare(Integer a, Integer b){
+                int f1 = factors(a);
+                int f2 = factors(b);
+
+                if(f1 > f2){
+                    return 1;
+                }
+                if(f1 == f2 && a > b){
+                    return 1;
+                }
+                else{
+                    return -1;
+                }
+            }
+        });
+
+        return A;
+    }
+
+    public int factors(int A){
+        int count = 0;
+
+        for(int i = 1; i * i <= A; i++){
+            if(A % i == 0){
+                if(i != A/i){
+                    count += 2;
+                }
+                else{
+                    count++;
+                }
+            }
+        } 
+        return count;
+
+    }
+}
