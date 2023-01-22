@@ -1,3 +1,14 @@
+Input 1:
+A = [6, 8, 9].  
+Output 1:
+[9, 6, 8]
+
+Input 2:
+A = [2, 4, 7]
+Output 2:
+[2, 7, 4]
+
+
 public class Solution {
     public ArrayList<Integer> solve(ArrayList<Integer> A) {
         Collections.sort(A, new Comparator <Integer> (){
