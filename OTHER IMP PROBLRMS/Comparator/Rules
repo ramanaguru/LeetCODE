@@ -1,0 +1,20 @@
+-1 : o1 < o2
+0 : o1 == o2
++1 : o1 > o2
+
+
+
+How to achieve ascending or descending order?
+
+It is worth to imagine that checked two elements' positions are swapped if comparator returns a value bigger than 0. Another thinking, 
+the sort function always sorts ascending.
+By returning -1 while o1>o2, you say to sort function that do not swap the elements. You achieve descending sorting by this way.
+
+
+If you always return the same value (o, 1, -1) for the comparator, regardless of it's inputs, then you're not using it correctly. 
+You need to base the value returned on the values passed in. The idea is that the data structure (or sorter) 
+calls the comparison function any time it needs to order two elements, 
+to find out what order to put them in.
+
+Its worth noting that the positive/negative integer values (-1, +1) don't need to be 1, they can be any positive/negative numbers. 
+It's just common practice to return -1/+1.
