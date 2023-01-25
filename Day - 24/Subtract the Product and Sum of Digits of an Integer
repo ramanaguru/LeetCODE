@@ -1,0 +1,25 @@
+class Solution {
+    public int subtractProductAndSum(int n) {
+        int newd = n;
+        int product = 1;
+        while(n > 0){
+            int lastd = n % 10;
+            product *= lastd;
+            n = n/10;
+        }
+
+        n = newd;
+        int sum = 0;
+
+
+        while(n > 0){
+            int lsd = n % 10;
+            sum += lsd;
+            n = n/10;
+        }
+
+        
+        return product - sum;
+        
+    }
+}
