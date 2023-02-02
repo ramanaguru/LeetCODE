@@ -1,0 +1,42 @@
+Given an array A. Sort this array using Count Sort Algorithm and return the sorted array.
+
+Example Input
+Input 1:
+A = [1, 3, 1]
+Input 2:
+A = [4, 2, 1, 3]
+
+
+Example Output
+Output 1:
+[1, 1, 3]
+Output 2:
+[1, 2, 3, 4]
+
+
+public class Solution {
+    public int[] solve(int[] A) {
+
+         int n = A.length;
+         int max = A[0];
+
+        for(int i = 0;i < n;i++){
+            max = Math.max(A[i],max);
+        }
+        int[] numbers = new int[max + 1];
+        for(int i = 0;i < n;i++){
+            int index = A[i] - 0;
+            numbers[index]++;
+        }
+        
+        int k = 0;
+        for(int i = 0;i < numbers.length;i++){
+            int count = numbers[i];
+            for(int j = 1; j <= count;j++) {
+                A[k] = i;
+                k++;
+            }
+        }
+        return A;
+    }
+}
