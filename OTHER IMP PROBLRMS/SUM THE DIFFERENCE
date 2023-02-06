@@ -1,0 +1,133 @@
+Given an integer array, A of size N.
+You have to find all possible non-empty subsequences of the array of numbers and then, for each subsequence, 
+find the difference between the largest and smallest numbers in that subsequence.
+Then add up all the differences to get the number.
+
+As the number may be large, output the number modulo 1e9 + 7 (1000000007).
+
+NOTE: Subsequence can be non-contiguous.
+
+
+Example Input
+Input 1:
+
+A = [1, 2] 
+Input 2:
+
+A = [3, 5, 10]
+
+
+Example Output
+Output 1:
+
+ 1 
+Output 2:
+
+ 21
+
+
+//Example Explanation
+
+Explanation 1:
+
+All possible non-empty subsets are:
+[1]     largest-smallest = 1 - 1 = 0
+[2]     largest-smallest = 2 - 2 = 0
+[1, 2]  largest-smallest = 2 - 1 = 1
+Sum of the differences = 0 + 0 + 1 = 1
+So, the resultant number is 1 
+Explanation 2:
+
+All possible non-empty subsets are:
+[3]         largest-smallest = 3 - 3 = 0
+[5]         largest-smallest = 5 - 5 = 0
+[10]        largest-smallest = 10 - 10 = 0
+[3, 5]      largest-smallest = 5 - 3 = 2
+[3, 10]     largest-smallest = 10 - 3 = 7
+[5, 10]     largest-smallest = 10 - 5 = 5
+[3, 5, 10]  largest-smallest = 10 - 3 = 7
+Sum of the differences = 0 + 0 + 0 + 2 + 7 + 5 + 7 = 21
+So, the resultant number is 21 
+
+
+// IDEA 
+
+It can be seen that if elements are sorted, then taking any two indexes,
+there will be a fixed number of K elements in between then.
+So you can take any number of K elements that are in between those two elements.
+So the difference of the values of those two indexes will contribute 2 to the power of K (subsets) to the answer.
+So we will take all possible pairs of elements.
+
+Example:
+1 2 3 4
+If we take indexes 0 and 3, i.e., elements 1 and 4. There are two elements between them (2, 3).
+So 1 and 4 are in 4 subsets which are
+a) 1 4
+b) 1 2 4
+c) 1 3 4
+d) 1 2 3 4
+Which is 2 to the power of 2.
+The complexity if O(N^2)
+
+If we take a close look at the approach above,
+we can solve it in O(N) also.
+After sorting the array,
+Answer is {A[N-1]2^(N-1) +A[N-2]2^(N-2) +…..+A[0]2^0} - {A[0]2^(N-1) + A[1]2^(N-2) +……+ A[0]2^0}
+
+
+
+
+
+
+
+
+   //   CODE
+
+
+
+public class Solution {
+
+    int mod = 1000000007;
+
+    public int solve(int[] A) {
+
+        int n = A.length;
+        Arrays.sort(A);
+
+        int Maxi =  findsumofMax(A);        //every ele will be max in 2^(rank in sorted) subsequences
+        int Mini =  findsumofMin(A);        //every ele will be min in 2^(len-1-rank) subsequences
+
+        return (Maxi - Mini + mod) % mod ;    // (b- a + mod) % mod
+ 
+    }
+
+    public int findsumofMax(int A[]){
+        int ans = 0;
+
+        for(int i = 0; i < A.length; i++){
+
+            ans += A[i] * Math.pow(2 , i) % mod;     //add mod to handle negative remainder case
+            ans = ans % mod;
+
+        } 
+
+        return ans;
+    }
+
+    public int findsumofMin(int A[]){
+        int ans = 0;
+        int j = 0;
+
+        for(int i = A.length - 1; i >= 0; i--){
+
+            ans += A[i] * Math.pow(2 , j) % mod;        //add mod to handle negative remainder case
+            ans = ans % mod;
+            j++;
+
+        } 
+
+        return ans;
+    }
+
+
+}
