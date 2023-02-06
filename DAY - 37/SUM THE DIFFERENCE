@@ -1,0 +1,49 @@
+public class Solution {
+
+    int mod = 1000000007;
+
+    public int solve(int[] A) {
+
+        int n = A.length;
+        Arrays.sort(A);
+
+        int Maxi =  findsumofMax(A);        //every ele will be max in 2^(rank in sorted) subsequences
+        int Mini =  findsumofMin(A);        //every ele will be min in 2^(len-1-rank) subsequences
+
+        return (Maxi - Mini + mod) % mod ;    // (b- a + mod) % mod
+ 
+    }
+
+    public int findsumofMax(int A[]){
+        int ans = 0;
+
+        for(int i = 0; i < A.length; i++){
+
+            ans += A[i] * Math.pow(2 , i) % mod;     //add mod to handle negative remainder case
+            ans = ans % mod;
+
+        } 
+
+        return ans;
+    }
+
+    public int findsumofMin(int A[]){
+        int ans = 0;
+        int j = 0;
+
+        for(int i = A.length - 1; i >= 0; i--){
+
+            ans += A[i] * Math.pow(2 , j) % mod;        //add mod to handle negative remainder case
+            ans = ans % mod;
+            j++;
+
+        } 
+
+        return ans;
+    }
+
+
+}
+
+
+
