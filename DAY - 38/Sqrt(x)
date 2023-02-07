@@ -1,0 +1,36 @@
+class Solution {
+    public int mySqrt(int x) {
+      // this will work
+
+            long r = x;
+             while (r*r > x)
+                  r = (r + x/r) / 2;
+             return (int) r;
+         
+         // This code will not work but logic is correct
+
+        // long ans = 0;
+        // long low = 0;
+        // long high = 0;
+
+        // while(low <= high){
+        //     long mid = low + (high - low)/2 ;
+
+        //     if(mid * mid == x){
+        //         return (int)mid;
+        //     }
+
+        //     if(mid * mid > x){
+        //         high = mid + 1;
+        //     }
+
+        //     if(mid * mid <= x){
+        //         ans = mid;
+        //         low = mid + 1;
+        //     }
+        // }
+
+        // return (int)ans;
+        
+    }
+}
