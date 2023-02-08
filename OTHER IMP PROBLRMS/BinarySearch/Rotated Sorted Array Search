@@ -1,0 +1,142 @@
+Rotated Sorted Array Search
+
+
+//   Problem Description
+
+Given a sorted array of integers A of size N and an integer B.
+
+array A is rotated at some pivot unknown to you beforehand.
+
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2 ).
+
+You are given a target value B to search. If found in the array, return its index otherwise, return -1.
+
+You may assume no duplicate exists in the array.
+
+NOTE: Users are expected to solve this in O(log(N)) time.
+
+
+
+A = [4, 5, 6, 7, 0, 1, 2, 3]
+B = 4 
+Input 2:
+
+A : [ 9, 10, 3, 5, 6, 8 ]
+B : 5
+
+
+Example Output
+Output 1:
+
+ 0 
+Output 2:
+
+ 3
+ 
+ 
+ 
+ // CODE
+ 
+ 
+ public class Solution {
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int search(final int[] A, int B) {
+        // For this qn this is enough
+        int n = A.length - 1;
+        int l = 0;
+        int h = n - 1 ;
+
+        while(l <= h){
+            int m = (l + h)/2;
+
+            if(A[m] == B){
+                return m;
+            }
+
+            else if(A[0] <= A[m]){ // 1 part of the array i.e left part is sorted
+               if(A[0] <= B && B < A[m]){
+                   h = m - 1; // go left
+               }
+               else{
+                   l = m + 1; // go right
+               }
+            }
+
+            else{ // 2nd part of the array i.e.  right part is sorted
+                if(A[m] < B && A[m] <= A[n-1]){
+                    l = m + 1; // go right
+                }else{
+                    h = m - 1; // go left
+                }
+            }
+        }
+
+        return -1;
+        
+        
+        
+
+//What if K is not given we can solve by this; THIS IS WILL BE APPROACH
+
+    
+         int k = 0;
+         
+    // FINDING K
+    
+        while(l <= h){
+
+             int m = (l+h)/2;
+
+             if(A[m] < A[0]){
+                 k = m;
+               h = m -1;
+            }
+            else{
+                l = m + 1;
+             } 
+
+         }
+        
+    // if element(B) is less than A[0] that means we search in 2nd part of sorted array i.e. from K to N-1; 
+         if(B < A[0] || k == 0){
+              int l1 = k;
+              int h1 = n - 1;
+
+             while(l1 <= h1){
+                 int m = (l1 + h1)/2;
+
+                 if(A[m] == B) return m;
+                 else if(A[m] > B){
+                     h1 = m - 1; // go left 
+                 }
+                 else{
+                     l1 = m + 1; // go right
+                 }
+             }
+
+             return -1; // if target not found return -1
+         }
+
+    // there is possibility that our element(B) might be there in 1st part of the sorted array i.e. from 0 to k-1
+         else{
+             int l1 = 0 ;
+             int h1 = k-1;
+
+             while(l1 <= h1){
+                 int m = (l1 + h1)/2;
+
+                 if(A[m] == B) return m;
+                 else if(A[m] > B){
+                     h1 = m - 1;  // go left
+                 }
+                 else{
+                     l1 = m + 1;  // go right
+                 }
+
+                 return -1; // if target is found return -1
+             }
+         }
+
+
+    }
+}
