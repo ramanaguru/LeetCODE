@@ -1,0 +1,100 @@
+Problem Description
+Farmer John has built a new long barn with N stalls. 
+Given an array of integers A of size N where each element of the array represents the location of the stall ,
+and an integer B which represents the number of cows.
+
+His cows don't like this barn layout and become aggressive towards each other once put into a stall. 
+To prevent the cows from hurting each other, John wants to assign the cows to the stalls, 
+such that the minimum distance between any two of them is as large as possible.
+What is the largest minimum distance?
+
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer B.
+
+
+
+Output Format
+Return the largest minimum distance possible among the cows.
+
+
+
+
+Input 1:
+
+A = [1, 2, 3, 4, 5]
+B = 3
+Input 2:
+
+A = [1, 2]
+B = 2
+
+
+Example Output
+Output 1:
+
+ 2
+Output 2:
+
+ 1
+
+
+Example Explanation
+Explanation 1:
+
+ John can assign the stalls at location 1, 3 and 5 to the 3 cows respectively. So the minimum distance will be 2.
+Explanation 2:
+
+ The minimum distance will be 1.
+
+
+
+//CODE
+
+
+public class Solution {
+    public int solve(int[] A, int B) {
+
+        Arrays.sort(A); // first sort the Array
+
+        int n = A.length;
+        int low = 1;
+        int high = A[n-1] - A[0]; // last - first
+        int ans = 0;
+
+        while(low <= high){
+            int mid =  (low + high)/2 ;      // low +(high - low) /2 ;  //( (low + high) >> 1) ;     --------------> //distance
+            if(checkPossible(A,mid,B)){
+                ans = mid;
+                low = mid + 1;
+            }
+            else{
+                high = mid - 1;
+            }
+
+        }
+        return ans;
+    }
+
+    //calling checkPossible function 
+
+    public boolean checkPossible(int A[], int distance, int cows){
+        int lastcow_Position = A[0];   // intially we can place first cow in A[0] that is first position;
+        int cowsCount = 1;             // there should be one cow so initailsing to 1;
+
+        for(int i = 1; i < A.length; i++){
+
+            if(A[i] - lastcow_Position >= distance){
+                cowsCount++;
+                lastcow_Position = A[i]; // going further we are updating the position
+                if(cowsCount >= cows){   // can also be cowsCount == cows that too will be work
+                     return true ;
+                }
+            }
+           
+        }
+
+        return false;
+    }
+}       
