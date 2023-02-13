@@ -1,0 +1,103 @@
+Problem Description
+
+Given an array of integers A and an integer B, find and return the minimum number of swaps required to bring all the numbers less than or equal to B together.
+
+Note: It is possible to swap any two elements, not necessarily consecutive.
+
+
+
+Input Format
+
+The first argument given is the integer array A.
+The second argument given is the integer B.
+
+
+
+Output Format
+
+Return the minimum number of swaps
+
+
+
+
+Example Input
+
+Input 1:
+
+ A = [1, 12, 10, 3, 14, 10, 5]
+ B = 8
+Input 2:
+
+ A = [5, 17, 100, 11]
+ B = 20
+
+
+Example Output
+
+Output 1:
+
+ 2
+Output 2:
+
+ 1
+
+
+Example Explanation
+
+Explanation 1:
+
+ A = [1, 12, 10, 3, 14, 10, 5]
+ After swapping  12 and 3, A => [1, 3, 10, 12, 14, 10, 5].
+ After swapping  the first occurence of 10 and 5, A => [1, 3, 5, 12, 14, 10, 10].
+ Now, all elements less than or equal to 8 are together.
+Explanation 2:
+
+ A = [5, 17, 100, 11]
+ After swapping 100 and 11, A => [5, 17, 11, 100].
+ Now, all elements less than or equal to 20 are together.
+ 
+
+
+ // CODE
+ 
+ 
+public class Solution {
+    public int solve(int[] A, int B) {
+        //Thinking sliding window concept
+        int n = A.length;
+        
+        //Fnding which are less_or_equals to B in the array and do count++
+        int count = 0;  
+       
+        for(int i = 0; i < n ; i++){
+            if(A[i] <= B) count++;
+        }
+
+        // with that count we are checking from 0 till the count // Sliding window concept
+        int swaps = 0;
+        int maxswaps = 0;
+        for(int i = 0; i < count; i++){
+            if(A[i] <= B) swaps++;
+        }
+       
+        maxswaps = Math.max(maxswaps,swaps); // i.e . we can also use this --->  maxswaps = swaps;
+
+        //then checking from s  till e ; i.e s = index 1 to e = count s++ , e++ 
+        int start = 1 , end = count;
+        
+
+        while(end < n){
+            if(A[start-1] <= B) swaps--;
+            if(A[end] <= B) swaps++;
+
+            maxswaps = Math.max(maxswaps,swaps);
+
+            start++;
+            end++;
+            
+        }
+
+        return count - maxswaps; // i.e no_of_min_elements_in_the_array  -  maxswaps gives the answer  
+
+    }
+}
