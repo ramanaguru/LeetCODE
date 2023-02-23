@@ -1,0 +1,51 @@
+reverse the given linked list
+
+Example Input
+Input 1:
+
+ A = 1 -> 2 -> 3 -> 4 -> 5 -> NULL 
+Input 2:
+
+ A = 3 -> NULL 
+
+
+Example Output
+Output 1:
+
+ 5 -> 4 -> 3 -> 2 -> 1 -> NULL 
+Output 2:
+
+ 3 -> NULL 
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+    public ListNode reverseList(ListNode A) {
+        //Inital 
+        ListNode head = A;
+        ListNode h1 = head;
+        ListNode h2 = null;
+
+        if(head==null) return null;
+
+        while(h1 != null){
+            ListNode temp = h1; 
+            h1 = h1.next;            
+            temp.next = h2; 
+            h2 = temp;
+            
+                            
+        }
+        return h2;
+
+    }
+}
