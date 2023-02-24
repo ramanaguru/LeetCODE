@@ -1,0 +1,108 @@
+The Rabin-Karp algorithm is a string searching algorithm that efficiently finds all occurrences of a pattern within a larger text. 
+The algorithm uses a rolling hash function to quickly compare the pattern with substrings of the text.
+
+Here's how the algorithm works:
+
+  1.Compute the hash value of the pattern and the first substring of the text of the same length.
+  2.Compare the hash values. If they match, compare the pattern and the substring character by character to confirm the match.
+  3.If the hash values don't match, slide the window over one character 
+    and compute the hash value of the new substring by subtracting the contribution of the first character and adding the contribution of the next character.
+  4.Repeat steps 2 and 3 until either all occurrences of the pattern have been found or the end of the text is reached.
+  
+
+The Rabin-Karp algorithm has an average time complexity of O(n+m), where n is the length of the text and m is the length of the pattern. 
+However, in the worst case, the algorithm can take O(nm) time.
+The rolling hash function used by the algorithm must be carefully chosen to minimize the likelihood of hash collisions.
+
+
+//PROBLEM NAME : RABIN's KARP
+
+
+Problem Description
+Given two string A and B of length N and M respectively consisting of lowercase letters. Find the number of occurrences of B in A.
+
+
+
+Input Format
+Two argument A and B are strings
+
+Output Format
+Return an integer denoting the number of occurrences of B in A
+
+
+Example Input
+Input 1:
+A = "acbac"
+B = "ac"
+Input 2:
+A = "aaaa"
+B = "aa"
+
+
+Example Output
+Output 1:
+2
+Output 2:
+3
+
+
+Example Explanation
+For Input 1:
+The string "ac" occurs twice in "acbac".
+For Input 2:
+The string "aa" occurs thrice in "aaaa".
+
+
+
+
+//CODE
+
+
+public class Solution {
+    public int solve(String A, String B) {
+        int n = A.length();
+        int m = B.length();
+        int mod = 1000000007;
+        // tw --> test word   ;     ow ------> original word
+        long tw = 0;
+        long ow = 0;
+        int cnt = 0;
+        //Always select prime greater equals to 31
+        int p = 31; // can take any prime number after several resesarch we came to know to use prime no
+
+        for(int i = 0; i < m; i++){
+           ow += (long)A.charAt(i) * pow(p,i);// i is the index value ; i.e checking the power with the idx position
+           ow = ow % mod;
+           tw += (long)B.charAt(i) *  pow(p,i);
+           tw = tw % mod;
+        }
+        if(tw == ow) cnt++;
+
+        int s = 1;
+        int e = m;
+        while(e < n){
+            long add = (A.charAt(e) * pow(p,e)) % mod;
+            long sub = (A.charAt(s-1) * pow(p,s-1)) % mod;
+
+            ow = (ow - sub + add + mod) % mod;
+            tw = (p * tw)% mod;
+
+            if(tw == ow) cnt++;
+            s++;
+            e++;
+
+        }
+        return (int)cnt;
+    }
+    public long pow(int A, int N){
+        int p = 1000000007;
+        if(N==0) return 1;
+        long half = pow(A,N/2);
+        long full = ((half % p) * (half % p))% p; 
+        if(N % 2 == 0){
+            return full;
+        }else{
+            return (full % p * A % p) % p;
+        }
+    }
+}
