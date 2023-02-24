@@ -1,0 +1,99 @@
+The Knuth-Morris-Pratt (KMP) algorithm is a string searching algorithm that efficiently finds all occurrences of a pattern within a larger text. The algorithm uses a prefix function to determine the largest border of the pattern that matches a prefix of the pattern.
+
+Here's how the algorithm works:
+
+1.Compute the prefix function for the pattern.
+2.Initialize two pointers, i and j, to 0, and iterate over the text:
+    a. If the current character of the text matches the current character of the pattern, increment both pointers.
+    b. If the current character of the text does not match the current character of the pattern and j is not 0,
+       set j to the value of the prefix function at j-1.
+    c. If the current character of the text does not match the current character of the pattern and j is 0, increment i.
+    d. If j equals the length of the pattern, a match has been found. Record the position of the match 
+       and set j to the value of the prefix function at j-1.
+
+
+Repeat step 2 until either all occurrences of the pattern have been found or the end of the text is reached.
+The KMP algorithm has a time complexity of O(n+m), where n is the length of the text and m is the length of the pattern. 
+The prefix function is precomputed in O(m) time, and the search phase iterates over the text in O(n) time.
+
+The KMP algorithm is particularly useful when the pattern to be searched for is much smaller than the text in which it is to be found.
+
+//Problem Name : cyclic permutations
+
+Example Input
+Input 1:
+
+ A = "1001"
+ B = "0011"
+Input 2:
+
+ A = "111"
+ B = "111"
+
+
+Example Output
+Output 1:
+
+ 1
+Output 2:
+
+ 3
+
+
+Example Explanation
+Explanation 1:
+
+ 4 cyclic shifts of B exists: "0011", "0110", "1100", "1001".  
+ There is only one cyclic shift of B i.e. "1001" which has 0 xor with A.
+Explanation 2:
+
+ All cyclic shifts of B are same as A and give 0 when taken xor with A. So, the ans is 3.
+ 
+ 
+ 
+ 
+//CODE
+
+
+public class Solution {
+    public int solve(String A, String B) {
+        //solved using KMP ALGORITHM
+        String c = B + B;
+        String d = A + "#" + c; 
+        int n = d.length();
+        int lps[] = new int[n];
+        lps[0] = 0;
+        for(int i = 1; i < n; i++){
+            int x = lps[i-1] ;
+            while(d.charAt(i) != d.charAt(x)){
+                if(x == 0){
+                    x = -1;
+                    break; 
+                }
+                
+                x= lps[x-1];
+            }
+            lps[i] = x + 1;            
+        }
+
+        int count = 0;
+
+        int pattern_len = A.length();
+
+        for(int i=0;i < n;i++)
+        {
+            if(lps[i]==pattern_len)
+            {
+                count++;
+            }
+        }
+        if(A.equals(B)){
+            return count -1;
+        }
+        return count;
+
+    }
+}
+
+
+
