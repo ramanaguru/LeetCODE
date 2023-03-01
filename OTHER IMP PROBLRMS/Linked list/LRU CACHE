@@ -1,0 +1,87 @@
+LRU ---> Least Recently Used
+
+
+class ListNode {                                             
+
+    int key;
+    int value;
+    ListNode prev, next;
+    ListNode(int k, int v) {
+      this.key   = k;
+      this.value = v;
+    }
+
+}
+
+public class Solution {
+
+  int capacity = 0;
+  ListNode head = new ListNode(-1, -1);
+  ListNode tail = new ListNode(-1, -1);
+  HashMap < Integer, ListNode > hm = new HashMap < > ();
+
+  public Solution(int capacity) {
+
+    this.capacity = capacity;
+    head.next = tail;
+    tail.prev = head;
+
+  }
+
+  public int get(int key) {
+
+    if (hm.containsKey(key)) {
+      ListNode node = hm.get(key); // creating node -- Get the value of the key if the key exists in the HashMap
+      remove(node);
+      insertAfterHead(node);
+      return node.value;
+    } 
+    else {
+      return -1;
+    }
+
+  }
+
+  public void set(int key, int value) {     // set means insert the value if the key is not already present.
+
+    if (hm.containsKey(key)) {
+      ListNode node = hm.get(key);  // if Key is already present remove the value , and add the new value to the Key 
+      remove(node);
+    }
+
+    if (hm.size() == capacity) { //when our cache i.e HashMap <hm> here ; hm size equals to the given capacity 
+
+      ListNode tailPrev = tail.prev;//Before removing the node delete the pair{key, node} of that node present in the cache.
+      remove(tailPrev);
+
+    }
+
+    ListNode newNode = new ListNode(key, value);
+    insertAfterHead(newNode);
+
+  }
+
+  public void insertAfterHead (ListNode node) {
+
+    hm.put(node.key, node);
+    ListNode headNext = head.next;
+
+    head.next = node;
+    node.prev = head;
+
+    node.next = headNext;
+    headNext.prev = node;
+
+  }
+
+  public void remove(ListNode node) {
+
+    hm.remove(node.key, node);
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+
+  }
+
+}
+//TC : o(N)    -----  o(1) for delete ,search,insert
+//SC : o(N)
