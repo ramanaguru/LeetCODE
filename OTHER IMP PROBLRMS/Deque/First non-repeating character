@@ -1,0 +1,104 @@
+First non-repeating character
+
+
+
+Problem Description
+
+Given a string A denoting a stream of lowercase alphabets, you have to make a new string B.
+B is formed such that we have to find the first non-repeating character each time a character is inserted to the stream and append it at the end to B.
+If no non-repeating character is found, append '#' at the end of B.
+
+
+
+Input Format
+The only argument given is string A.
+
+
+
+Output Format
+Return a string B after processing the stream of lowercase alphabets A.
+
+
+
+Example Input
+Input 1:
+
+ A = "abadbc"
+Input 2:
+
+ A = "abcabc"
+
+
+Example Output
+Output 1:
+
+"aabbdd"
+Output 2:
+
+"aaabc#"
+
+
+Example Explanation
+Explanation 1:
+
+"a"      -   first non repeating character 'a'
+"ab"     -   first non repeating character 'a'
+"aba"    -   first non repeating character 'b'
+"abad"   -   first non repeating character 'b'
+"abadb"  -   first non repeating character 'd'
+"abadbc" -   first non repeating character 'd'
+
+
+
+
+
+
+//CODE
+
+
+public class Solution {
+    public String solve(String A) {
+
+
+         Queue<Character> q = new LinkedList<Character>();
+
+           HashMap<Character, Integer> hm = new HashMap<Character, Integer>();
+
+           StringBuilder ans = new StringBuilder(); //can be used when you want to modify a string without creating a new object.
+
+           int N = A.length();
+
+        // updating the freq and checking with freq  of the Character
+           for(int i = 0; i < N ; i++){
+                if(!hm.containsKey(A.charAt(i))) hm.put(A.charAt(i),1);
+                else{
+                    hm.put(A.charAt(i),hm.get(A.charAt(i))+1);
+                }  
+
+                if(hm.containsKey(A.charAt(i)) && hm.get(A.charAt(i))==1){ //if current i-th Character in hm and its freq is 1 just enqueue the Character in queue
+                    q.add(A.charAt(i));
+                }    
+
+                while(!q.isEmpty()){                  
+                        if(hm.get(q.peek())>1){
+                                q.remove();
+                        }
+                        else{
+                                break;
+                        }
+                }
+
+                if( !q.isEmpty() )   ans.append(q.peek());
+                else{
+                    ans.append('#');
+                }    
+            }  
+
+
+            return ans.toString();
+
+
+
+    }
+}
+//tc && sc : o(N)
