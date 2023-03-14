@@ -1,0 +1,113 @@
+Problem Description
+
+Given the root of a binary tree A. Return the sum of all the nodes of the binary tree.
+
+---------------------------------------------------------------
+
+
+Example Input
+Input 1:
+
+ A =   2                 
+      / \                           
+     1   4            
+    /                           
+   5
+
+
+Input 2:
+
+A =   3
+      / \
+      6  1
+      \   \
+       2   7
+       
+---------------------------------------------------------------
+
+Example Output
+Output 1:
+
+12
+Output 2:
+
+19
+
+
+Example Explanation
+Explanation 1:
+
+The sum of all the nodes is 12
+Explanation 2:
+
+The sum of all the nodes is 19
+
+
+---------------------------------------------------------------
+
+
+CODE
+
+METHOD - 1 :
+
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public int solve(TreeNode A) {
+    
+        return totalSum(A);
+    }
+
+
+    private int totalSum(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+
+        return totalSum(root.left) + totalSum(root.right) + root.val;
+    }
+}
+
+
+----------------------------------------------------------------------------
+
+Method  - 2 :
+
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public int solve(TreeNode A) {
+        if(A == null) {
+            return 0;
+        }
+        
+
+        return solve(A.left)+solve(A.right)+ A.val ;
+    }
+}
+
+
+---------------------------------------------------------------
+
