@@ -1,0 +1,68 @@
+Given a binary tree, return the inorder traversal of its nodes' values.
+
+
+Example Input
+Input 1:
+
+   1
+    \
+     2
+    /
+   3
+Input 2:
+
+   1
+  / \
+ 6   2
+    /
+   3
+
+
+Example Output
+Output 1:
+
+ [1, 3, 2]
+Output 2:
+
+ [6, 1, 3, 2]
+
+
+
+
+CODE (Recursion Method)
+
+
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public int[] inorderTraversal(TreeNode A) {
+     
+        ArrayList<Integer>result = new ArrayList<>();
+        func_ofInorder(A,result);
+        return result;
+
+    }
+
+    void func_ofInorder(TreeNode temp, ArrayList ans){
+        if(temp == null){
+            return;
+        }
+        func_ofInorder(temp.left,ans);
+        ans.add(temp.val);
+        func_ofInorder(temp.right,ans);
+    }
+}
+
+
+----------------------------------------------------------------------------
