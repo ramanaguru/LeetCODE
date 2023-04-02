@@ -1,0 +1,123 @@
+//Problem description :
+
+
+
+The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+
+Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, 
+respectively.
+
+
+
+// Example-1 :
+
+Input: n = 4
+Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above
+
+Example 2:
+
+Input: n = 1
+Output: [["Q"]]
+
+
+
+
+
+
+//CODE
+
+
+class Solution {
+    public boolean isOK(int row,int col,char[][] board,int n){
+        //upper left diagonal
+        int duprow=row;
+        int dupcol=col;
+        
+        while(duprow>=0 && dupcol>=0){
+            if(board[duprow][dupcol]=='Q'){
+                return false;
+            }
+            duprow--;
+            dupcol--;   
+        }
+        //upper right diagonal
+        duprow=row;
+        dupcol=col;
+        while(duprow>=0 && dupcol<n){
+            if(board[duprow][dupcol]=='Q'){
+                return false;
+            }
+            duprow--;
+            dupcol++;   
+        }
+        //row checking
+        dupcol=col;
+        duprow=0;
+        while(duprow<n){
+            if(board[duprow][dupcol]=='Q'){
+                return false;
+            }
+            duprow++;  
+        }
+        //col checking
+        dupcol=0;
+        duprow=row;
+        while(dupcol<n){
+            if(board[duprow][dupcol]=='Q'){
+                return false;
+            }
+            dupcol++;  
+        }
+        return true;
+    }
+    public List<String> createBoard(char[][] board){
+        List<String> s=new ArrayList<>();
+        for(int i=0;i<board.length;i++){
+            String temp=new String(board[i]);
+            s.add(temp);
+        }
+        return s;
+    }
+    public void solve(int row,int n,char[][] board,List<List<String>> res){
+        if(row==n){
+            //List<String> r=createBoard(board);
+            res.add(createBoard(board));
+            return;
+        }
+        for(int col=0;col<n;col++){
+            if(isOK(row,col,board,n)){
+                board[row][col]='Q';
+                solve(row+1,n,board,res);
+                board[row][col]='.';
+            }
+        }
+    }
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> res=new ArrayList<>();
+        char[][] board=new char[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                board[i][j]='.';
+            }
+            
+        }
+        solve(0,n,board,res);
+        return res;
+    }
+}
+
+/*Observation :
+
+ 1) every row --> 1 queen
+ 2) every col --> 1 queen
+
+ Queen should not attack any other Queens.
+
+ Queen can attack in 8 directions.
+
+ Assumptions of directions : Upright diagonal, upleft diagonal, upstraight(vertical).
+
+*/
