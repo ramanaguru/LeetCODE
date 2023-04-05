@@ -1,0 +1,77 @@
+//Problem Description
+
+
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+Example 2:
+
+Input: strs = [""]
+Output: [[""]]
+Example 3:
+
+Input: strs = ["a"]
+Output: [["a"]]
+
+
+
+
+
+
+//CODE
+
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        //base condition
+        if(strs == null || strs.length == 0){
+            return new ArrayList<>();
+        }
+
+
+        //Create HashMap
+        HashMap<String,List<String>> frequencyStringsMap = new HashMap();
+
+        for(String str : strs){
+            String frequency_Check = getFrequency(str);
+            if(frequencyStringsMap.containsKey(frequency_Check)){
+                frequencyStringsMap.get(frequency_Check).add(str);
+            }
+            else{
+                ArrayList<String>tempList = new ArrayList<>(); // new word we found
+                tempList.add(str);
+                frequencyStringsMap.put(frequency_Check,tempList);//map that new word to our HashMap
+            }
+        }
+
+        return new ArrayList<>(frequencyStringsMap.values());
+
+    }
+
+    private String getFrequency(String str){
+
+        int freq[] = new int[26];
+        
+        for(char ch :str.toCharArray()){
+            
+            freq[ch - 'a']++;
+
+        }
+
+        StringBuilder sb = new StringBuilder("");
+        char ch = 'a';
+
+        for(int i : freq){
+            sb.append(ch);
+            sb.append(i);
+        }
+        return sb.toString();
+    }
+}
