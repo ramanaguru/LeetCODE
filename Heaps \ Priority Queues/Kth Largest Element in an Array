@@ -1,0 +1,49 @@
+Q) 215  (Leetcode)--> Kth Largest Element in an Array
+
+Given an integer array nums and an integer k, return the kth largest element in the array.
+
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+You must solve it in O(n) time complexity.
+
+ 
+
+Example 1:
+
+Input: nums = [3,2,1,5,6,4], k = 2
+Output: 5
+Example 2:
+
+Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+Output: 4
+
+
+
+//Code
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer>minheap = new PriorityQueue();//create a min heap
+
+        //add first K elements in our heap
+        for(int i = 0; i < k;i++){
+            minheap.add(nums[i]);
+        }
+        
+     // then add after k elements in our heap 
+     // there is an if statement where we need to check that our heap.top is greater than our curr(nums[i]) nothing to do with that curr element
+
+        for(int i = k ; i < nums.length; i++){
+            if(minheap.peek() > nums[i]){
+                continue;
+            }
+            else{
+                minheap.poll();
+                minheap.add(nums[i]);
+            }
+        }
+
+        return minheap.peek();
+        
+    }
+}
