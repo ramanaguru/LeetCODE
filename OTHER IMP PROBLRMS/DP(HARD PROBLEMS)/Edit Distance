@@ -1,0 +1,105 @@
+Q) 72(Leetcode) --------> Edit Distance
+
+
+
+
+Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+
+You have the following three operations permitted on a word:
+
+Insert a character
+Delete a character
+Replace a character
+
+-----------------------------------------------------------------------------------
+
+Example 1:
+
+Input: word1 = "horse", word2 = "ros"
+Output: 3
+
+Explanation: 
+horse -> rorse (replace 'h' with 'r')
+rorse -> rose (remove 'r')
+rose -> ros (remove 'e')
+-----------------------------------------------------------------------------------
+Example 2:
+
+Input: word1 = "intention", word2 = "execution"
+Output: 5
+
+Explanation: 
+intention -> inention (remove 't')
+inention -> enention (replace 'i' with 'e')
+enention -> exention (replace 'n' with 'x')
+exention -> exection (replace 'n' with 'c')
+exection -> execution (insert 'u'
+
+-----------------------------------------------------------------------------------
+
+
+// CODE
+
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int n = word1.length() -1;
+        int m = word2.length()-1;
+
+        int dp[][] = new int[n+1][m+1];
+
+        for(int row[] : dp){
+            Arrays.fill(row,-1);
+        }
+
+        return edit_Distance(word1, word2, n, m, dp);
+        
+    }
+
+    public int edit_Distance(String word1, String word2, int i, int j, int[][]dp){
+        //Base condition : one of the strings are null
+        if(i < 0) {
+            return j + 1;
+        }
+        //one of the strings are null
+        if(j < 0) {
+            return i + 1;
+        } 
+        
+        if(i < 0 && j< 0){
+            return 0;
+        }
+        //the strings are null
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+
+        if(dp[i][j] == -1){
+            if(word1.charAt(i) == word2.charAt(j)){
+                dp[i][j] = edit_Distance(word1, word2, i-1, j-1, dp);
+                return dp[i][j];
+            }
+            else{
+                int insert  = 1 + (edit_Distance(word1, word2, i,j-1,dp));
+                int replace = 1 + (edit_Distance(word1, word2, i-1, j-1, dp));
+                int delete = 1 + (edit_Distance(word1, word2, i-1, j , dp));
+
+                dp[i][j] = minimum(insert, replace, delete);
+            }
+        }
+
+        return dp[i][j];
+        }
+
+    public int minimum(int insert, int replace, int delete){
+        if(insert < replace && insert < delete){
+            return insert;
+        }
+        else if(replace < delete){
+            return replace;
+        }
+        else{
+            return delete;
+        }
+    }
+
+
