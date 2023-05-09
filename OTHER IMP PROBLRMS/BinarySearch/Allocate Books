@@ -44,13 +44,13 @@ There are two students. Books can be distributed in following fashion :
     
     
     
-    //CODE
+    //CODE(Works in codeStudios)
     
     import java.util.ArrayList;
 import java.io.*;
 public class Solution {
     public static int findPages(ArrayList<Integer> arr, int n, int m) {
-        //n --> no.of books(arr.size())    m  --> no.of students
+        //n --> no.of books(arr.size())    m  --> no.of students // here b is no. of students
         int low  = 0; // or low  = arr.get(0); or low = Integer,MAX_VALUE
         int high = 0;
  
