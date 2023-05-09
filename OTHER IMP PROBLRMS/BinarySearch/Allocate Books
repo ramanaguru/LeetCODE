@@ -46,110 +46,64 @@ There are two students. Books can be distributed in following fashion :
     
     //CODE
     
- 
- public class Solution {
-
-    public int books(int[] A, int B) {
-
-        //Search Space. -->{min in the array  to. sum of the elements in thte array}
-
-        int low = Integer.MAX_VALUE;
-
+    import java.util.ArrayList;
+import java.io.*;
+public class Solution {
+    public static int findPages(ArrayList<Integer> arr, int n, int m) {
+        //n --> no.of books(arr.size())    m  --> no.of students
+        int low  = 0; // or low  = arr.get(0); or low = Integer,MAX_VALUE
         int high = 0;
-
-        int ans = 0;
-
-
-        if(B > A.length)
-
+ 
+      //Base cases  : Think of it what could it might fail? 
+        //Each Student  must get atleast one book
+        //So, we came up  --> What If , No.of student is greater than No.of book , ie.(m > n) it fails
+        
+        if(m > arr.size()){
             return -1;
-
-
-        for(int i = 0; i < A.length; i++){
-
-            low = Math.min(low,A[i]);
-
-            high += A[i];
-
+        }
+           
+        //define the search Space
+        for(int i = 0; i  < n;  i++){
+            low = Math.max(low, arr.get(i));
+            high += arr.get(i);
         }
 
-        //Now we know our search space
+        int ans = -1;
 
         while(low <= high){
-
-
-            int mid = (low + high) >> 1;  // as same as (low+ high / 2 ) mid is the maxpages to understand
-
-            if(isPossible(mid, A ,B)){
-
+            
+            int mid = (low + high) / 2; 
+            
+            if(check(arr, n, m, mid)){
                 ans = mid;
-
-                high = mid - 1; // go left
-
+                high = mid - 1;
             }
-
             else{
-
-                low = mid + 1; // i.e go right
-
+                low = mid + 1;
             }
-
         }
-
-        
 
         return ans;
-
-    }
-
-    public boolean isPossible(int pages,int ar[], int students){
-
-        //Intially present
-
-        int sumofpages= 0;
-
-        int countofstudent = 1;
-
-
-        for(int i = 0; i < ar.length; i++){
-
             
-
-            if(ar[i] > pages){
-
+    } 
+    public static boolean check(ArrayList<Integer> arr, int n, int m, int mid) {
+       int studentCount = 1;
+       int pages = arr.get(0);
+       
+       for(int i = 1 ; i < n; i++){
+           pages += arr.get(i);
+           if(pages > mid){
+               studentCount++;
+               pages = arr.get(i);
+               if(studentCount > m){
                    return false;
-
-            }
-
-           
-
-            if(sumofpages + ar[i] > pages){
-
-                countofstudent++;
-
-                sumofpages = ar[i];
-
-                   if(countofstudent > students){return false;}
-
-            }
-
-    
-
-            else{
-
-                sumofpages += ar[i];
-
-            }
-
-
-        }
-
-
-     
-
-        return true;      
-
-    }  
-
+               }
+           }
+       }
+       return true;
+   }
+  
 }
+    
+ 
 
