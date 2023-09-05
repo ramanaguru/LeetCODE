@@ -1,0 +1,45 @@
+Missing And Repeating Numbers (CodingNinjas)
+=====================================================================================================================================
+//Problem Link  =========> https://www.codingninjas.com/studio/problems/missing-and-repeating-numbers_6828164
+=====================================================================================================================================
+
+//Problem Statement :
+
+
+Click The Above LINk YOU WILL FIND THE PROBLEM STATEMENT AND WITH EXAMPLES
+   
+
+=====================================================================================================================================
+
+//CODE —————> TC :  o(N)  ;    SC : o(N) ======> THIS IS BETTER APPROACH ,BUT THERE IS ONE OPTIMAL APPROACH I FIND THAT TOO HARD UNDERSTAND BECAUSE OF MATHS RELATED
+
+public class Solution {
+    public static int[] findMissingRepeatingNumbers(int []a) {
+        int n = a.length;
+
+        int freq[] = new int[n+1];
+
+        for(int i = 0 ; i < n ; i++){
+            freq[a[i]]++;        //count the freq of a number and storing it in the freq array
+        }
+
+        int missing = -1;
+        int repeating = -1;
+
+        for(int i = 1 ; i<= n ; i++){
+            if(freq[i] == 0) missing = i;
+            else if(freq[i] == 2) repeating = i;
+        }
+
+        int ans[] = new int[2];
+        ans[0] = repeating;
+        ans[1] = missing;
+
+        return ans;
+
+
+    }
+}
+
+
+=====================================================================================================================================
