@@ -1,1 +1,3 @@
-*.java linguist-detachable=true
+
+*.java linguist-language=Java
+
