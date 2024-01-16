@@ -1,0 +1,59 @@
+Insert Delete GetRandom O(1) - LEETCODE 380
+
+Problem LINK ====>  https://leetcode.com/problems/insert-delete-getrandom-o1/description/
+
+class RandomizedSet {
+
+    List<Integer>list = new ArrayList<>();
+    HashMap<Integer, Integer> map =new HashMap<>();
+    Random random = new Random();
+
+    public RandomizedSet() {
+        //Basically this is a constructor which initialises RandomizedSet Object
+    }
+    
+    public boolean insert(int val) {
+        if(map.containsKey(val)) return false;
+        list.add(val);
+
+        //add the value and adding that at which particular time we have accessed that val, basically to increase the randomness
+        map.put(val, list.size()-1); 
+
+        return true;
+    }
+    
+public boolean remove(int val) {
+        if(!map.containsKey(val)) {
+            return false;
+        }
+
+        int lastIndex = list.size() - 1;
+        int lastElement = list.get(lastIndex);
+        int indexElement = map.get(val);
+
+        // Swap with last element
+        list.set(indexElement, lastElement);
+
+        // Update indices [Add & Delete]
+        map.put(lastElement, indexElement);
+        map.remove(val);
+
+        // Remove from list
+        list.remove(lastIndex);
+        return true;
+    }
+
+    
+    public int getRandom() {
+        int rand = list.get(random.nextInt(list.size()));
+        return rand;
+    }
+}
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
